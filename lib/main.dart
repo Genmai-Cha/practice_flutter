@@ -8,56 +8,66 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CupertinoApp(
-       title: 'テスト (ios風) ',
-       theme: CupertinoThemeData(
-        scaffoldBackgroundColor: Color(0xFFFAFAFA)
+      title: 'テスト (ios風) ',
+      theme: CupertinoThemeData(
+        primaryColor: Color.fromRGBO(155, 203, 206, 1),
+        scaffoldBackgroundColor: Color.fromRGBO(255, 246, 233, 1),
       ),
-      home:NavBar(),
+      home: MyAppPage(),
     );
   }
-
 }
 
-class NavBar extends StatefulWidget {
-  const NavBar();
+class MyAppPage extends StatefulWidget {
+  const MyAppPage({super.key});
 
   @override
-  State<NavBar> createState() => _NavBarState();
+  State<MyAppPage> createState() => _MyAppPageState();
 }
 
-class _NavBarState extends State<NavBar> {
+class _MyAppPageState extends State<MyAppPage> {
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
+    return const CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-          middle: const Text('Header'),
-          backgroundColor: const Color.fromARGB(255, 14, 14, 227),
+        backgroundColor: Color.fromRGBO(155, 203, 206, 1),
       ),
-      child: Center (
-        child:       Column(
-        children: <Widget>[
-          const Text(
-            'ここにコンテンツ入ります',
-            style: TextStyle(
-              fontSize: 20,
-              color:const Color.fromARGB(255, 14, 14, 227)
-            )
-          ),
-          const SizedBox(height: 20),
-          CupertinoButton.filled(
-            child: const Text(
-              'ただのボタン',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Color(0xFFFAFAfA)
-              ),
-              ),
-            onPressed: (){}
-          ),
-        ], 
+      child: SafeArea(
+        child: BottomTabBar(),
       ),
-      )
+    );
+  }
+}
 
+class BottomTabBar extends StatefulWidget {
+  const BottomTabBar({Key? key}) : super(key: key);
+
+  @override
+  State<BottomTabBar> createState() => _BottomTabBarState();
+}
+
+class _BottomTabBarState extends State<BottomTabBar> {
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.home), label: 'ホーム'),
+          BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.settings), label: '設定'),
+        ],
+      ),
+      tabBuilder: (BuildContext context, int index) {
+        return CupertinoTabView(
+          builder: (BuildContext context) {
+            return Center(
+              child: Icon(
+                  index == 0 ? CupertinoIcons.home : CupertinoIcons.settings),
+            );
+          },
+        );
+      },
     );
   }
 }
