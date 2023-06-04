@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:practice_flutter/page/top_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -47,6 +48,8 @@ class BottomTabBar extends StatefulWidget {
 }
 
 class _BottomTabBarState extends State<BottomTabBar> {
+  static const _topPage = TopPage();
+
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
@@ -59,14 +62,11 @@ class _BottomTabBarState extends State<BottomTabBar> {
         ],
       ),
       tabBuilder: (BuildContext context, int index) {
-        return CupertinoTabView(
-          builder: (BuildContext context) {
-            return Center(
-              child: Icon(
-                  index == 0 ? CupertinoIcons.home : CupertinoIcons.settings),
-            );
-          },
-        );
+        return CupertinoTabView(builder: (BuildContext context) {
+          return Center(
+            child: index == 0 ? _topPage : Text('2ページめ！'),
+          );
+        });
       },
     );
   }
